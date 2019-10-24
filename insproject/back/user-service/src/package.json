@@ -1,0 +1,26 @@
+{
+  "name": "user-service",
+  "version": "1.0.0",
+  "description": "Service to provide detailed movies info.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "test": "node index.test | tap-spec"
+  },
+  "author": "damn_diamond",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv-safe": "^8.1.0",
+    "express": "^4.16.3",
+    "helmet": "^3.21.1",
+    "mongodb": "^3.0.7",
+    "morgan": "^1.9.1",
+    "request": "^2.88.0",
+    "supertest": "^4.0.2",
+    "tap-spec": "^4.1.2",
+    "tape": "^4.9.0"
+  },
+  "devDependencies": {}
+}

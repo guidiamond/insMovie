@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Test</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <div class="container">
+      <fieldset>
+        <form action="/discover" method="post">
+          <select name="genre">
+            <% for (var i = locals.genres.length - 1; i >= 0; i--) { %>
+              <option value='<%= locals.genres[i] %>'><%= locals.genres[i] %></option>
+            <% } %>
+          </select>
+          <select name="rating" class = "custom-select">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>s
+          </select>
+          <input value= "discover" type="submit" class="button">
+        </form>
+        </form>
+      </fieldset>
+    </div>
+  </body>
+</html>

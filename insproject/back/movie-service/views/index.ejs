@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Test</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <div class="container">
+      <fieldset>
+        <form action="/playing" method="get">
+          <button class="button">Now Playing</button>
+        </form>
+        <form action="/upcoming" method="get">
+          <button class="button">Upcoming</button>
+        </form>
+        <form action="/discover" method="get">
+          <button class="button">Discover</button>
+        </form>
+        <form action="/filmography" method="get">
+          <button class="button">filmography</button>
+        </form>
+        <form action="/popular" method="get">
+          <button class="button">popular</button>
+        </form>
+        <form action="/top_rating" method="get">
+          <button class="button">IMDB top rating</button>
+        </form>
+        <form action="/trending" method="get">
+          <button class="button">trending</button>
+        </form>
+        <form action="/buscafilme" method="post">
+          <input name="title" type="text" class="ghost-input" placeholder="Enter a Movie Title" required>
+          <input type="submit" class="ghost-button" value="Get rating">
+        </form>
+        <form action="/similar" method="post">
+          <input name="title" type="text" class="ghost-input" placeholder="Enter a Movie Title" required>
+          <input type="submit" class="ghost-button" value="Get similar movies">
+        </form>
+        <form action="/review" method="post">
+          <input name="title" type="text" class="ghost-input" placeholder="Enter a Movie Title" required>
+          <input type="submit" class="ghost-button" value="Get reviews">
+        </form>
+        <% if(locals.id !== null){ %>
+          <p><%= locals.id %></p>
+          <p><%= locals.title %></p>
+          <p><%= locals.poster %></p>
+          <p><%= locals.rating %></p>
+          <p><%= locals.review %></p>
+        <% } else { %>
+          <p><% locals.error %></p>
+        <% } %>
+      </fieldset>
+    </div>
+  </body>
+</html>
