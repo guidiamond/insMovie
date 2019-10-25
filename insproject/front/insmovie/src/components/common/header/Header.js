@@ -1,4 +1,4 @@
-import React, { useState }, {Component} from 'react';
+import React, {useState,Component} from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -15,6 +15,11 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import MovieIcon from '@material-ui/icons/Movie';
+import { BrowserRouter, Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+import { withRouter } from "react-router-dom";
+
 const useStyles = makeStyles(theme => ({
   grow: {
     flexGrow: 1,
@@ -77,13 +82,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-class Header extends Component {
-  constructor(props){
-    super(props);
-  }
-  componentWillMount() {
-  }
-}
+function Header(props) {
+
   const [searchedMovie, setSearchedMovie] = useState('');
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -95,7 +95,10 @@ class Header extends Component {
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
   };
+  const handleMovieIcon = event => {
+    props.history.push("/");
 
+  };
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
@@ -108,8 +111,8 @@ class Header extends Component {
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-  const onSubmit = () => {
-    <Redirect to="/somewhere/else" />
+  const onSubmit = event => {
+      props.history.push("/movie_search/" + searchedMovie);
   }
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -161,16 +164,14 @@ class Header extends Component {
             className={classes.MovieIcon}
             color="inherit"
             aria-label="open drawer"
+            onClick={handleMovieIcon}
           >
             <MovieIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             InsMovie
           </Typography>
-          <div className={classes.search} onClick={}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
+          <div className={classes.search}>
             <InputBase
               placeholder="Search…"
               classes={{
@@ -181,6 +182,10 @@ class Header extends Component {
               onChange={event => setSearchedMovie(event.target.value)}
             />
           </div>
+          <IconButton className={classes.iconButton} aria-label="search" onClick={onSubmit}>
+          <SearchIcon />
+          </IconButton>
+
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton
@@ -213,4 +218,4 @@ class Header extends Component {
   );
 }
 
-export default Login;
+export default withRouter(Header);
