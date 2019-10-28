@@ -1,13 +1,12 @@
+import './css/Discover.css';
 import React, { useState, useEffect } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import './css/NowPlaying.css';
 import Header from '../../common/header/Header';
 import Searchbar from '../../common/searchbar/Searchbar';
 import MovieCards from '../../common/movie_cards/MovieCards';
 import axios from 'axios';
 
-function NowPlaying(props) {
-
+function DiscoverGenre(props) {
 	const [id, setId] = useState('');
 	const [poster, setPoster] = useState('');
 	const [rating, setRating] = useState('');
@@ -15,8 +14,11 @@ function NowPlaying(props) {
 	const apiBaseUrl = "http://localhost:3002/";
 
 	useEffect(() => {
+		var payload = {
+			'genre': "war"
+		}
 		const getFilme = async () => {
-			await axios.get(apiBaseUrl+'playing')
+			await axios.post(apiBaseUrl+'discover', payload)
 			.then(function (response) {
 				setId(response.data['id']);
 				setPoster(response.data['poster']);
@@ -41,4 +43,4 @@ function NowPlaying(props) {
 
 	}
 
-export default NowPlaying;
+	export default DiscoverGenre;

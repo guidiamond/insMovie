@@ -1,22 +1,16 @@
-import React, {useState,Component} from 'react';
+import React, {useState} from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import MovieIcon from '@material-ui/icons/Movie';
-import { BrowserRouter, Route } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import { withRouter } from "react-router-dom";
 
@@ -103,9 +97,10 @@ function Header(props) {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
+  const handleMenuClose = (option) => {
     setAnchorEl(null);
     handleMobileMenuClose();
+    props.history.push("/" + option);
   };
 
   const handleMobileMenuOpen = event => {
@@ -125,8 +120,9 @@ function Header(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={() => handleMenuClose("movie_list")}>My Movie List</MenuItem>
+      <MenuItem onClick={() => handleMenuClose("my_account")}>My account</MenuItem>
+      <MenuItem onClick={() => handleMenuClose("login")}>Logout</MenuItem>
     </Menu>
   );
 

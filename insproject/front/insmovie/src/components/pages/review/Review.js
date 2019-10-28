@@ -1,27 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import './css/NowPlaying.css';
 import Header from '../../common/header/Header';
 import Searchbar from '../../common/searchbar/Searchbar';
 import MovieCards from '../../common/movie_cards/MovieCards';
 import axios from 'axios';
 
-function NowPlaying(props) {
-
-	const [id, setId] = useState('');
-	const [poster, setPoster] = useState('');
-	const [rating, setRating] = useState('');
+function Review(props) {
+	const [review, setReview] = useState('');
 	const [title, setTitle] = useState('');
 	const apiBaseUrl = "http://localhost:3002/";
 
 	useEffect(() => {
+		var payload = {
+			'title': props.match.params.movie
+		}
 		const getFilme = async () => {
-			await axios.get(apiBaseUrl+'playing')
+			await axios.post(apiBaseUrl+'review', payload)
 			.then(function (response) {
-				setId(response.data['id']);
-				setPoster(response.data['poster']);
-				setRating(response.data['rating']);
-				setTitle(response.data['title']);
+				setReview(response.data['review'][0]);
 			})
 		}
 		getFilme();
@@ -32,7 +28,7 @@ function NowPlaying(props) {
 		<div class="page" >
 		<MuiThemeProvider>
 		<Searchbar />
-		<MovieCards id={id} poster={poster} title={title} rating={rating} />
+		<h3>{review}</h3>
 		</MuiThemeProvider>
 		</div>
 		</div>
@@ -41,4 +37,4 @@ function NowPlaying(props) {
 
 	}
 
-export default NowPlaying;
+	export default Review;

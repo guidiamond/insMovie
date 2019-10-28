@@ -9,8 +9,12 @@ module.exports = (app) => {
       if(err){
         res.json(err);
       }
-      let movieList = JSON.parse(body)
-      var listId= new Array();
+      else if (title == undefined || title == '') {
+        res.json({"rating": [], "id": [], "poster": [], "title":[]});
+      }
+      else {
+        let movieList = JSON.parse(body)
+        var listId= new Array();
         var listTitle= new Array();
         var listRating= new Array();
         var listPoster= new Array();
@@ -26,36 +30,34 @@ module.exports = (app) => {
           listPoster.push(`http://image.tmdb.org/t/p/w500/${poster}`);
         }
         res.json({"rating": listRating, "id": listId, "poster": listPoster, "title":listTitle});
-      });
+      }
+    });
   })
 
   app.get('/playing', function (req, res) {
     let url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}`
     request(url, function(err, response, body){
       if(err){
-        res.render('index', {rating: null, error: 'Error, please try again'});
-      } else {
+        res.json(err);
+      }
+      else {
         let movieList = JSON.parse(body)
-        if(movieList == undefined){
-          res.render('index', {rating: null, error: 'Error, please try again'});
-        } else {
-          var listId= new Array();
-          var listTitle= new Array();
-          var listRating= new Array();
-          var listPoster= new Array();
-          for (var i = movieList.results.length - 1; i >= 0; i--) {
-            let id = movieList.results[i].id;
-            let title = movieList.results[i].title;
-            let rating = movieList.results[i].vote_average;
-            let poster = movieList.results[i].poster_path;
-            console.log(id);
-            listId.push(id);
-            listTitle.push(title);
-            listRating.push(rating);
-            listPoster.push(`http://image.tmdb.org/t/p/w500/${poster}`);
-          }
-          res.json({"rating": listRating, "id": listId, "poster": listPoster, "title":listTitle});
+        var listId= new Array();
+        var listTitle= new Array();
+        var listRating= new Array();
+        var listPoster= new Array();
+        for (var i = movieList.results.length - 1; i >= 0; i--) {
+          let id = movieList.results[i].id;
+          let title = movieList.results[i].title;
+          let rating = movieList.results[i].vote_average;
+          let poster = movieList.results[i].poster_path;
+          console.log(id);
+          listId.push(id);
+          listTitle.push(title);
+          listRating.push(rating);
+          listPoster.push(`http://image.tmdb.org/t/p/w500/${poster}`);
         }
+        res.json({"rating": listRating, "id": listId, "poster": listPoster, "title":listTitle});    
       }
     });
   })
@@ -64,29 +66,25 @@ module.exports = (app) => {
     let url = `https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}`
     request(url, function(err, response, body){
       if(err){
-        res.render('index', {rating: null, error: 'Error, please try again'});
-      } else {
+        res.json(err);
+      }else {
         let movieList = JSON.parse(body)
-        if(movieList == undefined){
-          res.render('index', {rating: null, error: 'Error, please try again'});
-        } else {
-          var listId= new Array();
-          var listTitle= new Array();
-          var listRating= new Array();
-          var listPoster= new Array();
-          for (var i = movieList.results.length - 1; i >= 0; i--) {
-            let id = movieList.results[i].id;
-            let title = movieList.results[i].title;
-            let rating = movieList.results[i].vote_average;
-            let poster = movieList.results[i].poster_path;
-            console.log(id);
-            listId.push(id);
-            listTitle.push(title);
-            listRating.push(rating);
-            listPoster.push(`http://image.tmdb.org/t/p/w500/${poster}`);
-          }
-          res.json({"rating": listRating, "id": listId, "poster": listPoster, "title":listTitle});
+        var listId= new Array();
+        var listTitle= new Array();
+        var listRating= new Array();
+        var listPoster= new Array();
+        for (var i = movieList.results.length - 1; i >= 0; i--) {
+          let id = movieList.results[i].id;
+          let title = movieList.results[i].title;
+          let rating = movieList.results[i].vote_average;
+          let poster = movieList.results[i].poster_path;
+          console.log(id);
+          listId.push(id);
+          listTitle.push(title);
+          listRating.push(rating);
+          listPoster.push(`http://image.tmdb.org/t/p/w500/${poster}`);
         }
+        res.json({"rating": listRating, "id": listId, "poster": listPoster, "title":listTitle});
       }
     });
   })
@@ -100,15 +98,16 @@ module.exports = (app) => {
         let genres = new Array();
         for (var i = genreList.length - 1; i >= 0; i--) {
           genres.push(genreList[i].name);
-          console.log(genres, genreList[i].name);
         }
-        res.render('discover', {genres: genres});
+        console.log(genres);
+        res.json({"genres": genres});
       }
     });
   })
 
   app.post('/discover', function (req, res) {
     let genre = req.body.genre;
+    console.log("genre vale" + genre);
     let url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`
     request(url, function(err, response, body){
       let genreDic = JSON.parse(body)
@@ -124,28 +123,23 @@ module.exports = (app) => {
             console.log(url2);
             request(url2, function(err, response, body){
               if(err){
-                res.render('index', {rating: null, error: 'Error, please try again'});
+                res.json(err);
               } else {
                 let movieList = JSON.parse(body)
-                console.log(movieList);
-                if(movieList == undefined){
-                  res.render('index', {rating: null, error: 'Error, please try again'});
-                } else {
-                  var listId= new Array();
-                  var listTitle= new Array();
-                  var listRating= new Array();
-                  var listPoster= new Array();
-                  for (var i = movieList.results.length - 1; i >= 0; i--) {
-                    let id = movieList.results[i].id;
-                    let title = movieList.results[i].title;
-                    let rating = movieList.results[i].vote_average;
-                    let poster = movieList.results[i].poster_path;
-                    console.log(id);
-                    listId.push(id);
-                    listTitle.push(title);
-                    listRating.push(rating);
-                    listPoster.push(`http://image.tmdb.org/t/p/w500/${poster}`);
-                  }
+                var listId= new Array();
+                var listTitle= new Array();
+                var listRating= new Array();
+                var listPoster= new Array();
+                for (var i = movieList.results.length - 1; i >= 0; i--) {
+                  let id = movieList.results[i].id;
+                  let title = movieList.results[i].title;
+                  let rating = movieList.results[i].vote_average;
+                  let poster = movieList.results[i].poster_path;
+                  console.log(id);
+                  listId.push(id);
+                  listTitle.push(title);
+                  listRating.push(rating);
+                  listPoster.push(`http://image.tmdb.org/t/p/w500/${poster}`);
                   res.json({"rating": listRating, "id": listId, "poster": listPoster, "title":listTitle});
                 }
               }
@@ -170,30 +164,26 @@ module.exports = (app) => {
         let url2 = `https://api.themoviedb.org/3/discover/movie?api_key=66a26aa32ce4593c4fe0f905d4306b0d&sort_by=popularity.desc&include_adult=false&include_video=false&with_people=${actorId}`
         request(url2, function(err, response, body){
           if(err){
-            res.render('index', {rating: null, error: 'Error, please try again'});
+            res.json(err);
           } else {
             let movieList = JSON.parse(body)
             console.log(movieList);
-            if(movieList == undefined){
-              res.render('index', {rating: null, error: 'Error, please try again'});
-            } else {
-              var listId= new Array();
-              var listTitle= new Array();
-              var listRating= new Array();
-              var listPoster= new Array();
-              for (var i = movieList.results.length - 1; i >= 0; i--) {
-                let id = movieList.results[i].id;
-                let title = movieList.results[i].title;
-                let rating = movieList.results[i].vote_average;
-                let poster = movieList.results[i].poster_path;
-                console.log(id);
-                listId.push(id);
-                listTitle.push(title);
-                listRating.push(rating);
-                listPoster.push(`http://image.tmdb.org/t/p/w500/${poster}`);
-              }
-              res.json({"rating": listRating, "id": listId, "poster": listPoster, "title":listTitle});
+            var listId= new Array();
+            var listTitle= new Array();
+            var listRating= new Array();
+            var listPoster= new Array();
+            for (var i = movieList.results.length - 1; i >= 0; i--) {
+              let id = movieList.results[i].id;
+              let title = movieList.results[i].title;
+              let rating = movieList.results[i].vote_average;
+              let poster = movieList.results[i].poster_path;
+              console.log(id);
+              listId.push(id);
+              listTitle.push(title);
+              listRating.push(rating);
+              listPoster.push(`http://image.tmdb.org/t/p/w500/${poster}`);
             }
+            res.json({"rating": listRating, "id": listId, "poster": listPoster, "title":listTitle});
           }
         })
       }
@@ -212,30 +202,25 @@ module.exports = (app) => {
         let url2 = `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${apiKey}`
         request(url2, function(err, response, body){
           if(err){
-            res.render('index', {rating: null, error: 'Error, please try again'});
+            res.json(err);
           } else {
             let movieList = JSON.parse(body)
-            console.log(movieList);
-            if(movieList == undefined){
-              res.render('index', {rating: null, error: 'Error, please try again'});
-            } else {
-              var listId= new Array();
-              var listTitle= new Array();
-              var listRating= new Array();
-              var listPoster= new Array();
-              for (var i = movieList.results.length - 1; i >= 0; i--) {
-                let id = movieList.results[i].id;
-                let title = movieList.results[i].title;
-                let rating = movieList.results[i].vote_average;
-                let poster = movieList.results[i].poster_path;
-                console.log(id);
-                listId.push(id);
-                listTitle.push(title);
-                listRating.push(rating);
-                listPoster.push(`http://image.tmdb.org/t/p/w500/${poster}`);
-              }
-              res.json({"rating": listRating, "id": listId, "poster": listPoster, "title":listTitle});
+            var listId= new Array();
+            var listTitle= new Array();
+            var listRating= new Array();
+            var listPoster= new Array();
+            for (var i = movieList.results.length - 1; i >= 0; i--) {
+              let id = movieList.results[i].id;
+              let title = movieList.results[i].title;
+              let rating = movieList.results[i].vote_average;
+              let poster = movieList.results[i].poster_path;
+              console.log(id);
+              listId.push(id);
+              listTitle.push(title);
+              listRating.push(rating);
+              listPoster.push(`http://image.tmdb.org/t/p/w500/${poster}`);
             }
+            res.json({"rating": listRating, "id": listId, "poster": listPoster, "title":listTitle});
           }
         })
       }
@@ -246,8 +231,8 @@ module.exports = (app) => {
     let url = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`
     request(url, function(err, response, body){
       if(err){
-        res.render('index', {rating: null, error: 'Error, please try again'});
-      } else {
+        res.json(err);
+      }else {
         let movieList = JSON.parse(body)
         if(movieList == undefined){
           res.render('index', {rating: null, error: 'Error, please try again'});
@@ -277,29 +262,25 @@ module.exports = (app) => {
     let url = `https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}`
     request(url, function(err, response, body){
       if(err){
-        res.render('index', {rating: null, error: 'Error, please try again'});
-      } else {
+        res.json(err);
+      }else {
         let movieList = JSON.parse(body)
-        if(movieList == undefined){
-          res.render('index', {rating: null, error: 'Error, please try again'});
-        } else {
-          var listId= new Array();
-          var listTitle= new Array();
-          var listRating= new Array();
-          var listPoster= new Array();
-          for (var i = movieList.results.length - 1; i >= 0; i--) {
-            let id = movieList.results[i].id;
-            let title = movieList.results[i].title;
-            let rating = movieList.results[i].vote_average;
-            let poster = movieList.results[i].poster_path;
-            console.log(id);
-            listId.push(id);
-            listTitle.push(title);
-            listRating.push(rating);
-            listPoster.push(`http://image.tmdb.org/t/p/w500/${poster}`);
-          }
-          res.json({"rating": listRating, "id": listId, "poster": listPoster, "title":listTitle});
+        var listId= new Array();
+        var listTitle= new Array();
+        var listRating= new Array();
+        var listPoster= new Array();
+        for (var i = movieList.results.length - 1; i >= 0; i--) {
+          let id = movieList.results[i].id;
+          let title = movieList.results[i].title;
+          let rating = movieList.results[i].vote_average;
+          let poster = movieList.results[i].poster_path;
+          console.log(id);
+          listId.push(id);
+          listTitle.push(title);
+          listRating.push(rating);
+          listPoster.push(`http://image.tmdb.org/t/p/w500/${poster}`);
         }
+        res.json({"rating": listRating, "id": listId, "poster": listPoster, "title":listTitle});
       }
     });
   })
@@ -308,29 +289,25 @@ module.exports = (app) => {
     let url = `https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}`
     request(url, function(err, response, body){
       if(err){
-        res.render('index', {rating: null, error: 'Error, please try again'});
-      } else {
+        res.json(err);
+      }else {
         let movieList = JSON.parse(body)
-        if(movieList == undefined){
-          res.render('index', {rating: null, error: 'Error, please try again'});
-        } else {
-          var listId= new Array();
-          var listTitle= new Array();
-          var listRating= new Array();
-          var listPoster= new Array();
-          for (var i = movieList.results.length - 1; i >= 0; i--) {
-            let id = movieList.results[i].id;
-            let title = movieList.results[i].title;
-            let rating = movieList.results[i].vote_average;
-            let poster = movieList.results[i].poster_path;
-            console.log(id);
-            listId.push(id);
-            listTitle.push(title);
-            listRating.push(rating);
-            listPoster.push(`http://image.tmdb.org/t/p/w500/${poster}`);
-          }
-          res.json({"rating": listRating, "id": listId, "poster": listPoster, "title":listTitle});
+        var listId= new Array();
+        var listTitle= new Array();
+        var listRating= new Array();
+        var listPoster= new Array();
+        for (var i = movieList.results.length - 1; i >= 0; i--) {
+          let id = movieList.results[i].id;
+          let title = movieList.results[i].title;
+          let rating = movieList.results[i].vote_average;
+          let poster = movieList.results[i].poster_path;
+          console.log(id);
+          listId.push(id);
+          listTitle.push(title);
+          listRating.push(rating);
+          listPoster.push(`http://image.tmdb.org/t/p/w500/${poster}`);
         }
+        res.json({"rating": listRating, "id": listId, "poster": listPoster, "title":listTitle});
       }
     });
   })
@@ -351,20 +328,15 @@ module.exports = (app) => {
         let url2 = `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${apiKey}`
         request(url2, function(err, response, body){
           if(err){
-            res.render('index', {rating: null, error: 'Error, please try again'});
+            res.json(err);
           } else {
             let movieList = JSON.parse(body)
-            console.log(movieList);
-            if(movieList == undefined){
-              res.render('index', {rating: null, error: 'Error, please try again'});
-            } else {
-              var listReview= new Array();
-              for (var i = movieList.results.length - 1; i >= 0; i--) {
-                let content = movieList.results[i].content;
-                listReview.push(content);
-              }
-              res.json({"review": listReview});
+            var listReview= new Array();
+            for (var i = movieList.results.length - 1; i >= 0; i--) {
+              let content = movieList.results[i].content;
+              listReview.push(content);
             }
+            res.json({"review": listReview});
           }
         })
       }

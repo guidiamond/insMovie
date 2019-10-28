@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import SplitterLayout from 'react-splitter-layout';
 import 'react-splitter-layout/lib/index.css';
@@ -9,6 +10,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { withRouter } from "react-router-dom";
 
@@ -31,10 +33,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Cards(props) {
+  var [section, setSection] = useState('');
 
   function onSubmit(event, page) {
-      console.log("escolhido:" + props.previusPath);
-      props.history.push(props.previusPath + page);
+      console.log("escolhido:" + page);
+      props.history.push("/" + page);
   }
 
   const classes = useStyles();

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import './css/NowPlaying.css';
+import './css/Similar.css';
 import Header from '../../common/header/Header';
 import Searchbar from '../../common/searchbar/Searchbar';
 import MovieCards from '../../common/movie_cards/MovieCards';
@@ -15,9 +15,13 @@ function NowPlaying(props) {
 	const apiBaseUrl = "http://localhost:3002/";
 
 	useEffect(() => {
+		var payload = {
+			'title': props.match.params.movie
+		}
 		const getFilme = async () => {
-			await axios.get(apiBaseUrl+'playing')
+			await axios.post(apiBaseUrl+'similar', payload)
 			.then(function (response) {
+				
 				setId(response.data['id']);
 				setPoster(response.data['poster']);
 				setRating(response.data['rating']);

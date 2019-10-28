@@ -19,15 +19,36 @@ module.exports = (app, repository) => {
 		let login = req.body.login;
 		let email = req.body.email;
 		let password = req.body.password;
-		repository.registerUser(first_name, last_name, login, email, password, (err, msg) => {
-			if(err) return res.redirect('/getusers');
+		let security_code = req.body.security_code;
+		console.log(req.body);
+		repository.registerUser(first_name, last_name, login, email, security_code, password, (err, msg) => {
+			if(err) return res.json(err);
 			res.json(msg);
 		});
 	});
+	app.post('/forgot_password', (req, res, next) => {
+		let login = req.body.login;
+		let securityCode = req.body.security_code;
+		let password = req.body.password;
+		repository.forgotPassword(login, securityCode, (err, user) => {
+			if(err) return res.json(err);
+			if (user != undefined) {
+				repository.resetPassword(login, password, (err, change) => {
+					console.log(change);
+					res.json({"auth": true});
+				});
+			}
+			else {
+				console.log("nao e isso");
+
+				res.json({"auth": false});
+			}
+		});
+	})
 	app.get('/getusers', (req, res, next) => {
 		repository.getUsers((err, user) => {
 			if(err) return next(err);
 			res.json(user);
 		});
-	})
+	});
 }

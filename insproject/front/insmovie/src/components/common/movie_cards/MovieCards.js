@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
+import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles({
   card: {
@@ -21,26 +22,39 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MediaCard(props) {
+function MovieCards(props) {
   const classes = useStyles();
+
+    const handleReview = (title) => {
+      console.log(title);
+    props.history.push("/review/" + title);
+  };
+      const handleSimilar = (title) => {
+      console.log(title);
+    props.history.push("/similar/" + title);
+  };
+
   var movie_cards = [];
-  for (var movie in props.id) {
+  for (let movie in props.id) {
     movie_cards.push(<Card className={classes.card} style={{'margin-top': 100}}>
-      <CardActionArea>
+      <CardActionArea onClick={() => handleReview(props.title[movie])}>
       <CardMedia
       className={classes.media}
       image={props.poster[movie]}
       title={props.title[movie]}
       />
-      <CardContent>
+      <CardContent >
       <Typography gutterBottom variant="h5" component="h2">
       {props.title[movie]}
       </Typography>
       </CardContent>
-      </CardActionArea>
+      </CardActionArea >
       <CardActions>
       <Button size="small" color="primary">
       Read about it
+      </Button>
+      <Button size="small" color="primary" onClick={() => handleSimilar(props.title[movie])}>
+      Similar
       </Button>
 
       <p>
@@ -66,3 +80,4 @@ export default function MediaCard(props) {
     </Grid>
     );
   }
+export default withRouter(MovieCards);

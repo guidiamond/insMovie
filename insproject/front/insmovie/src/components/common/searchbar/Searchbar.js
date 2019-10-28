@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import DirectionsIcon from '@material-ui/icons/Directions';
+
+import { withRouter } from "react-router-dom";
+
 
 const useStyles = makeStyles(theme => ({
 	palette: {
@@ -40,8 +41,13 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
-export default function Searchbar() {
+function Searchbar(props) {
 	const classes = useStyles();
+	const [search, setSearch] = useState('');
+
+  const onSubmit = event => {
+      props.history.push("/filmography/" + search);
+  }
 
 	return (
 		<Paper className={classes.root}>
@@ -49,12 +55,16 @@ export default function Searchbar() {
 		className={classes.input}
 		style ={{'color': 'white'}}
 		placeholder="Search for your favorite movie"
-		inputProps={{ 'aria-label': 'Search for your favorite movie' }}
+        onChange={event => setSearch(event.target.value)}
+		inputProps={{ 'aria-label': 'Search for your favorite movie' }
+		}
 		/>
 		<Divider className={classes.divider} orientation="vertical" />
-		<IconButton color="primary" className={classes.iconButton} aria-label="search">
+		<IconButton color="primary" className={classes.iconButton} aria-label="search" onClick={onSubmit}>
 		<SearchIcon />
 		</IconButton>
 		</Paper>
 		);
 }
+
+export default withRouter(Searchbar);

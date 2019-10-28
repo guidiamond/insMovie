@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import RaisedButton from 'material-ui/RaisedButton';
 import Header from '../../common/header/Header';
 import Searchbar from '../../common/searchbar/Searchbar';
 import MovieCards from '../../common/movie_cards/MovieCards';
-import Grid from '@material-ui/core/Grid'
 import axios from 'axios';
 
 function SearchResults(props) {
@@ -14,9 +12,6 @@ function SearchResults(props) {
 	const [title, setTitle] = useState('');
 	const apiBaseUrl = "http://localhost:3002/";
 
-	const onSubmit = event => {
-		props.history.push("/login");
-	}
 	useEffect(() => {
 		var payload = {
 			'title': props.match.params.search

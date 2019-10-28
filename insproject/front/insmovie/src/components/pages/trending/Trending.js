@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import './css/NowPlaying.css';
+import './css/Upcoming.css';
 import Header from '../../common/header/Header';
 import Searchbar from '../../common/searchbar/Searchbar';
 import MovieCards from '../../common/movie_cards/MovieCards';
 import axios from 'axios';
 
-function NowPlaying(props) {
+function Trending(props) {
 
 	const [id, setId] = useState('');
 	const [poster, setPoster] = useState('');
@@ -16,7 +16,7 @@ function NowPlaying(props) {
 
 	useEffect(() => {
 		const getFilme = async () => {
-			await axios.get(apiBaseUrl+'playing')
+			await axios.get(apiBaseUrl+'trending')
 			.then(function (response) {
 				setId(response.data['id']);
 				setPoster(response.data['poster']);
@@ -41,4 +41,4 @@ function NowPlaying(props) {
 
 	}
 
-export default NowPlaying;
+export default Trending;
