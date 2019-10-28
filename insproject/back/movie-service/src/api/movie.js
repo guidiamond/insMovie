@@ -18,7 +18,7 @@ module.exports = (app) => {
         var listTitle= new Array();
         var listRating= new Array();
         var listPoster= new Array();
-        for (var i = movieList.results.length - 1; i >= 0; i--) {
+        for (let i = movieList.results.length - 1; i >= 0; i--) {
           let id = movieList.results[i].id;
           let title = movieList.results[i].title;
           let rating = movieList.results[i].vote_average;
@@ -46,7 +46,7 @@ module.exports = (app) => {
         var listTitle= new Array();
         var listRating= new Array();
         var listPoster= new Array();
-        for (var i = movieList.results.length - 1; i >= 0; i--) {
+        for (let i = movieList.results.length - 1; i >= 0; i--) {
           let id = movieList.results[i].id;
           let title = movieList.results[i].title;
           let rating = movieList.results[i].vote_average;
@@ -73,7 +73,7 @@ module.exports = (app) => {
         var listTitle= new Array();
         var listRating= new Array();
         var listPoster= new Array();
-        for (var i = movieList.results.length - 1; i >= 0; i--) {
+        for (let i = movieList.results.length - 1; i >= 0; i--) {
           let id = movieList.results[i].id;
           let title = movieList.results[i].title;
           let rating = movieList.results[i].vote_average;
@@ -96,7 +96,7 @@ module.exports = (app) => {
       if(genreDic !== undefined){
         const genreList = genreDic.genres
         let genres = new Array();
-        for (var i = genreList.length - 1; i >= 0; i--) {
+        for (let i = genreList.length - 1; i >= 0; i--) {
           genres.push(genreList[i].name);
         }
         console.log(genres);
@@ -114,23 +114,27 @@ module.exports = (app) => {
       console.log(genreDic);
       if(genreDic !== undefined){
         const genreList = genreDic.genres
-        for (var i = genreList.length - 1; i >= 0; i--) {
-          if (genre == genreList[i].name){
+        for (let i = genreList.length - 1; i >= 0; i--) {
+        console.log(genreList[i].name.toLowerCase());
+          if (genre == genreList[i].name.toLowerCase()){
+            console.log("dsadsa");
             const genreId = genreList[i].id;
             let rating = req.body.rating;
             let url2 = `https://api.themoviedb.org/3/discover/movie?api_key=66a26aa32ce4593c4fe0f905d4306b0d&sort_by=popularity.desc&include_adult=
             false&include_video=false&vote_average.gte=${rating}&with_genres=${genreId}`
             console.log(url2);
+              console.log("batata");
             request(url2, function(err, response, body){
               if(err){
                 res.json(err);
               } else {
                 let movieList = JSON.parse(body)
+                console.log(movieList);
                 var listId= new Array();
                 var listTitle= new Array();
                 var listRating= new Array();
                 var listPoster= new Array();
-                for (var i = movieList.results.length - 1; i >= 0; i--) {
+                for (let i = movieList.results.length - 1; i >= 0; i--) {
                   let id = movieList.results[i].id;
                   let title = movieList.results[i].title;
                   let rating = movieList.results[i].vote_average;
@@ -140,6 +144,7 @@ module.exports = (app) => {
                   listTitle.push(title);
                   listRating.push(rating);
                   listPoster.push(`http://image.tmdb.org/t/p/w500/${poster}`);
+                  console.log("entra caralhooo");
                   res.json({"rating": listRating, "id": listId, "poster": listPoster, "title":listTitle});
                 }
               }
@@ -172,7 +177,7 @@ module.exports = (app) => {
             var listTitle= new Array();
             var listRating= new Array();
             var listPoster= new Array();
-            for (var i = movieList.results.length - 1; i >= 0; i--) {
+            for (let i = movieList.results.length - 1; i >= 0; i--) {
               let id = movieList.results[i].id;
               let title = movieList.results[i].title;
               let rating = movieList.results[i].vote_average;
@@ -209,7 +214,7 @@ module.exports = (app) => {
             var listTitle= new Array();
             var listRating= new Array();
             var listPoster= new Array();
-            for (var i = movieList.results.length - 1; i >= 0; i--) {
+            for (let i = movieList.results.length - 1; i >= 0; i--) {
               let id = movieList.results[i].id;
               let title = movieList.results[i].title;
               let rating = movieList.results[i].vote_average;
@@ -241,7 +246,7 @@ module.exports = (app) => {
           var listTitle= new Array();
           var listRating= new Array();
           var listPoster= new Array();
-          for (var i = movieList.results.length - 1; i >= 0; i--) {
+          for (let i = movieList.results.length - 1; i >= 0; i--) {
             let id = movieList.results[i].id;
             let title = movieList.results[i].title;
             let rating = movieList.results[i].vote_average;
@@ -269,7 +274,7 @@ module.exports = (app) => {
         var listTitle= new Array();
         var listRating= new Array();
         var listPoster= new Array();
-        for (var i = movieList.results.length - 1; i >= 0; i--) {
+        for (let i = movieList.results.length - 1; i >= 0; i--) {
           let id = movieList.results[i].id;
           let title = movieList.results[i].title;
           let rating = movieList.results[i].vote_average;
@@ -296,7 +301,7 @@ module.exports = (app) => {
         var listTitle= new Array();
         var listRating= new Array();
         var listPoster= new Array();
-        for (var i = movieList.results.length - 1; i >= 0; i--) {
+        for (let i = movieList.results.length - 1; i >= 0; i--) {
           let id = movieList.results[i].id;
           let title = movieList.results[i].title;
           let rating = movieList.results[i].vote_average;
@@ -332,7 +337,7 @@ module.exports = (app) => {
           } else {
             let movieList = JSON.parse(body)
             var listReview= new Array();
-            for (var i = movieList.results.length - 1; i >= 0; i--) {
+            for (let i = movieList.results.length - 1; i >= 0; i--) {
               let content = movieList.results[i].content;
               listReview.push(content);
             }

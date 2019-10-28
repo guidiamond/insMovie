@@ -29,9 +29,11 @@ function TopRated(props) {
 	return (
 		<div className="Home">
 		<Header />
+		<center>
+		<h1>Top Rated</h1>
+		</center>
 		<div class="page" >
 		<MuiThemeProvider>
-		<Searchbar />
 		<MovieCards id={id} poster={poster} title={title} rating={rating} />
 		</MuiThemeProvider>
 		</div>

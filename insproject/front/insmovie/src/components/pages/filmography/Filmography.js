@@ -33,6 +33,9 @@ function Filmography(props) {
 	return (
 		<div className="Home">
 		<Header />
+		<center>
+		<h1>Filmography</h1>
+		</center>
 		<div class="page" >
 		<MuiThemeProvider>
 		<Searchbar />

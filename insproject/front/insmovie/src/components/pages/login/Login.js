@@ -6,10 +6,12 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Home from '../home/Home';
 import ProfileHeader from '../../common/profile_header/ProfileHeader';
 import TextField from 'material-ui/TextField';
+import Cookies from 'universal-cookie';
 var apiBaseUrl = "http://localhost:3002/";
 function Login(props){
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const cookies = new Cookies();
   const handleClick = event => {
     var apiBaseUrl = "http://localhost:3002/";
     var payload = {
@@ -19,6 +21,8 @@ function Login(props){
     axios.post(apiBaseUrl+'auth', payload)
     .then(function (response) {
       if (response.data['auth']) {
+        cookies.set('login', username);
+        console.log(cookies.get('login'));
         props.history.push('/');
       }
       else {

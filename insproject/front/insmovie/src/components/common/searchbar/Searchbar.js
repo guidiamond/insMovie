@@ -54,7 +54,7 @@ function Searchbar(props) {
 		<InputBase
 		className={classes.input}
 		style ={{'color': 'white'}}
-		placeholder="Search for your favorite movie"
+		placeholder="Search for your favorite actor"
         onChange={event => setSearch(event.target.value)}
 		inputProps={{ 'aria-label': 'Search for your favorite movie' }
 		}

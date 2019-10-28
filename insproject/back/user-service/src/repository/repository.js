@@ -21,13 +21,19 @@ function forgotPassword(login, security_code, callback) {
 		db.collection("login").findOne({"login": login, "security_code": security_code}, callback);
 	});
 }
+function updateAccount(changedValues, callback) {
+	mongodb.connect((err, db) => {
+		var login = changedValues['login'];
+		delete changedValues.login;
+		db.collection('login').updateOne({login:login},{$set:changedValues},callback);	
+	});
+}
 function resetPassword(login, new_password, callback) {
 	mongodb.connect((err, db) => {
-		db.collection("login").updateOne({"login": login},$set: {"password": new_password}, callback);
+		db.collection('login').updateOne({login:login},{$set:{"password": new_password}},callback);	
 	});
-
 }
 function disconnect(){
 	return mongodb.disconnect();
 }
-module.exports = { getUser, getUsers, disconnect, registerUser, forgotPassword, resetPassword }
+module.exports = { getUser, getUsers, disconnect, registerUser, forgotPassword, resetPassword, updateAccount }

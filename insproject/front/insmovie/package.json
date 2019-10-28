@@ -16,7 +16,8 @@
     "react-scripts": "3.2.0",
     "react-splitter-layout": "^4.0.0",
     "react-tap-event-plugin": "^3.0.3",
-    "superagent": "^5.1.0"
+    "superagent": "^5.1.0",
+    "universal-cookie": "^4.0.2"
   },
   "scripts": {
     "start": "PORT=2000 react-scripts start",

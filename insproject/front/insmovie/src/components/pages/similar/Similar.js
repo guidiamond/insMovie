@@ -33,9 +33,11 @@ function NowPlaying(props) {
 	return (
 		<div className="Home">
 		<Header />
+		<center>
+		<h1>Similar</h1>
+		</center>
 		<div class="page" >
 		<MuiThemeProvider>
-		<Searchbar />
 		<MovieCards id={id} poster={poster} title={title} rating={rating} />
 		</MuiThemeProvider>
 		</div>

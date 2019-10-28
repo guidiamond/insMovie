@@ -12,7 +12,6 @@ function DiscoverGenre(props) {
 	const [rating, setRating] = useState('');
 	const [title, setTitle] = useState('');
 	const apiBaseUrl = "http://localhost:3002/";
-
 	useEffect(() => {
 		var payload = {
 			'genre': "war"
@@ -20,6 +19,8 @@ function DiscoverGenre(props) {
 		const getFilme = async () => {
 			await axios.post(apiBaseUrl+'discover', payload)
 			.then(function (response) {
+				console.log(response.data);
+				console.log("batata");
 				setId(response.data['id']);
 				setPoster(response.data['poster']);
 				setRating(response.data['rating']);
@@ -33,7 +34,6 @@ function DiscoverGenre(props) {
 		<Header />
 		<div class="page" >
 		<MuiThemeProvider>
-		<Searchbar />
 		<MovieCards id={id} poster={poster} title={title} rating={rating} />
 		</MuiThemeProvider>
 		</div>

@@ -30,9 +30,11 @@ function SearchResults(props) {
 	return (
 		<div className="Home">
 		<Header />
+		<center>
+		<h1>Search Results</h1>
+		</center>
 		<div class="page" >
 		<MuiThemeProvider>
-		<Searchbar />
 		<MovieCards id={id} poster={poster} title={title} rating={rating} />
 		</MuiThemeProvider>
 		</div>

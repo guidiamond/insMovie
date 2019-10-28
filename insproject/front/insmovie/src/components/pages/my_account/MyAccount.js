@@ -5,38 +5,43 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import axios from 'axios';
 import Login from '../login/Login';
-import ProfileHeader from '../../common/profile_header/ProfileHeader';
+import Header from '../../common/header/Header';
+import Cookies from 'universal-cookie';
 
 function MyAccount(props) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
   const [securityCode, setSecurityCode] = useState('');
   const [password, setPassword] = useState('');
+  const cookies = new Cookies();
+
 
   const handleClick = event => {
     var apiBaseUrl = "http://localhost:3002/";
-    var payload = {
-      "first_name": firstName,
-      "last_name": lastName,
-      "email": email,
-      "login": username,
-      "security_code": securityCode,
-      "password": password
+    var payload = {};
+    payload["login"] = cookies.get('login');
+    if (firstName != '') {
+      payload["first_name"] = firstName;
+    }
+    if (lastName != '') {
+      payload["last_name"] = lastName;
+    }
+    if (email != '') {
+      payload["email"] = email;
+    }
+    if (password != '') {
+      payload["password"] = password;
     }
     console.log(payload);
-    axios.post(apiBaseUrl+'forgot_passowrd', payload);
-    props.history.push('/login');
+    axios.post(apiBaseUrl+'update_account', payload);
+    props.history.push('/');
 
-    }
-  const handleRegister = event => {
-    props.history.push('/login');
   }
 
   return (
    <div>
-   <ProfileHeader />
+   <Header />
    <MuiThemeProvider>
    <center>
    <h1>Edit My Account</h1>
@@ -59,29 +64,15 @@ function MyAccount(props) {
    />
    <br/>
    <TextField
-   hintText="Enter your Username"
-   floatingLabelText="Username"
-   onChange = {event => setUsername(event.target.value)}
-   />
-   <br/>
-   <TextField
-   hintText="Enter your Security Code"
-   floatingLabelText="Security Code"
-   onChange = {event => setSecurityCode(event.target.value)}
-   />
-   <br/>
-   <TextField
    hintText="Enter your Password"
    floatingLabelText="Password"
    onChange = {event => setPassword(event.target.value)}
    />
    <br />
    <RaisedButton label="Submit" primary={true} onClick={handleClick}/>
-   <br />
-   <RaisedButton label="Login" primary={true} onClick={handleRegister}/>
    </center>
    </ MuiThemeProvider>
    </div>
    );
-}
-  export default MyAccount;
+ }
+ export default MyAccount;

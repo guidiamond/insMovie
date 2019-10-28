@@ -31,7 +31,6 @@ function Discover(props) {
 		<Header />
 		<div class="page" >
 		<MuiThemeProvider>
-		<Searchbar />
 		<Cards card={genreJson} previusPath="/discover/"/>
 		</MuiThemeProvider>
 		</div>

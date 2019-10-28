@@ -25,9 +25,11 @@ function Review(props) {
 	return (
 		<div className="Home">
 		<Header />
+		<center>
+		<h1>Review</h1>
+		</center>
 		<div class="page" >
 		<MuiThemeProvider>
-		<Searchbar />
 		<h3>{review}</h3>
 		</MuiThemeProvider>
 		</div>

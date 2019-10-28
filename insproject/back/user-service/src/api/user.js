@@ -51,4 +51,12 @@ module.exports = (app, repository) => {
 			res.json(user);
 		});
 	});
+
+	app.post('/update_account', (req, res, next) => {
+		let changedValues = req.body;
+		repository.updateAccount(changedValues, (err, user) => {
+			if(err) return next(err);
+			res.json(user);
+		});
+	})
 }
