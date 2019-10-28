@@ -16,7 +16,7 @@ function ForgotPassword(props) {
   const [password, setPassword] = useState('');
 
   const handleClick = event => {
-    var apiBaseUrl = "http://localhost:3002/";
+    var apiBaseUrl = "http://localhost:3005/";
     var payload = {
       "login": username,
       "security_code": securityCode,

@@ -16,7 +16,7 @@ function Register(props) {
   const [password, setPassword] = useState('');
 
   const handleClick = event => {
-    var apiBaseUrl = "http://localhost:3002/";
+    var apiBaseUrl = "http://localhost:3005/";
     var payload = {
       "first_name": firstName,
       "last_name": lastName,

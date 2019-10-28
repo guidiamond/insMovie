@@ -4,7 +4,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const bd = require('body-parser')
 var server = null;
-function start(api, callback){
+function start(api, repository, callback){
 	const app = express();
 	app.use(cors());
 	app.use(morgan('dev'));
@@ -13,7 +13,7 @@ function start(api, callback){
 		res.status(500).send('Something went wrong!');
 	})
 	app.use(bd.json());
-	api(app);
+	api(app, repository);
 	server = app.listen(parseInt(process.env.PORT), () =>
 		callback(null, server));
 	app.listen(3002, function() {

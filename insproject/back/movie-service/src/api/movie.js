@@ -1,4 +1,4 @@
-module.exports = (app) => {
+module.exports = (app, repository) => {
   const apiKey = '66a26aa32ce4593c4fe0f905d4306b0d';
   const request = require('request');
 
@@ -115,7 +115,7 @@ module.exports = (app) => {
       if(genreDic !== undefined){
         const genreList = genreDic.genres
         for (let i = genreList.length - 1; i >= 0; i--) {
-        console.log(genreList[i].name.toLowerCase());
+          console.log(genreList[i].name.toLowerCase());
           if (genre == genreList[i].name.toLowerCase()){
             console.log("dsadsa");
             const genreId = genreList[i].id;
@@ -123,7 +123,7 @@ module.exports = (app) => {
             let url2 = `https://api.themoviedb.org/3/discover/movie?api_key=66a26aa32ce4593c4fe0f905d4306b0d&sort_by=popularity.desc&include_adult=
             false&include_video=false&vote_average.gte=${rating}&with_genres=${genreId}`
             console.log(url2);
-              console.log("batata");
+            console.log("batata");
             request(url2, function(err, response, body){
               if(err){
                 res.json(err);
@@ -317,10 +317,6 @@ module.exports = (app) => {
     });
   })
 
-  app.get('/filmography', function (req, res) {
-    res.render('actor');
-  })
-
   app.post('/review', function (req, res) {
     let title = req.body.title;
     let url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${title}&include_adult=false`
@@ -347,4 +343,24 @@ module.exports = (app) => {
       }
     });
   })
+
+  app.post('/favorite', (req, res, next) => {
+    let login = req.body.login;
+    let title = req.body.title;
+    repository.setFavorite(login, title, (err, msg) => {
+      if(err) return res.json(err);
+      res.json(msg);
+    });
+  });
+
+  app.post('/my_favorites', (req, res, next) => {
+    let login = req.body.login;
+    repository.getUser(login, (err, msg) => {
+      if(err) return res.json(err);
+      if (msg != undefined || msg != []) {
+          res.json(msg);
+      }
+    });
+  });
+
 }

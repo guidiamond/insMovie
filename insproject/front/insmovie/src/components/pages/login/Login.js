@@ -7,13 +7,13 @@ import Home from '../home/Home';
 import ProfileHeader from '../../common/profile_header/ProfileHeader';
 import TextField from 'material-ui/TextField';
 import Cookies from 'universal-cookie';
-var apiBaseUrl = "http://localhost:3002/";
+var apiBaseUrl = "http://localhost:3005/";
 function Login(props){
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const cookies = new Cookies();
   const handleClick = event => {
-    var apiBaseUrl = "http://localhost:3002/";
+    var apiBaseUrl = "http://localhost:3005/";
     var payload = {
       "login": username,
       "password": password

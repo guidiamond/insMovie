@@ -16,8 +16,8 @@ function start(api, repository, callback){
 	api(app, repository);
 	server = app.listen(parseInt(process.env.PORT), () =>
 		callback(null, server));
-	app.listen(3002, function() {
-		console.log("ouvindo a porta 3002!");
+	app.listen(3005, function() {
+		console.log("ouvindo a porta 3005!");
 	})
 }
 function stop(){

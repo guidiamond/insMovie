@@ -13,6 +13,7 @@ import Review from './components/pages/review/Review';
 import Filmography from './components/pages/filmography/Filmography';
 import Trending from './components/pages/trending/Trending';
 import NowPlaying from './components/pages/now_playing/NowPlaying';
+import MovieList from './components/pages/movie_list/MovieList';
 import Discover from './components/pages/discover/Discover';
 import DiscoverGenre from './components/pages/discover/DiscoverGenre';
 import SearchResults from './components/pages/search_results/SearchResults';
@@ -36,6 +37,7 @@ function App(props) {
     <Route exact path="/filmography" component={Filmography}/>
     <Route exact path="/filmography/:search" component={Filmography}/>
     <Route exact path="/discover" component={Discover}/>
+    <Route exact path="/movie_list" component={MovieList}/>
     <Route exact path="/discover/:genre" component={DiscoverGenre}/>
     </Router>
     );

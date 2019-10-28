@@ -2,6 +2,9 @@ module.exports = (app, repository) => {
 	app.post('/auth', (req, res, next) => {
 		let login = req.body.login;
 		let password = req.body.password;
+		console.log("------");
+		console.log(login + password);
+		console.log("------");
 		repository.getUser(login, password, (err, user) => {
 			if(err) return next(err);
 			console.log(user);
@@ -48,7 +51,12 @@ module.exports = (app, repository) => {
 	app.get('/getusers', (req, res, next) => {
 		repository.getUsers((err, user) => {
 			if(err) return next(err);
-			res.json(user);
+			listOfUsers = {"login": []};
+			for (i in user) {
+				console.log(i);
+				listOfUsers["login"].push(user[i]["login"]);
+			}
+			res.json(listOfUsers);
 		});
 	});
 

@@ -11,6 +11,8 @@ import Grid from '@material-ui/core/Grid';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
 import { withRouter } from "react-router-dom";
+import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 const useStyles = makeStyles({
   card: {
@@ -24,60 +26,69 @@ const useStyles = makeStyles({
 
 function MovieCards(props) {
   const classes = useStyles();
+  const apiBaseUrl = "http://localhost:3002/";
+  const cookies = new Cookies();
 
-    const handleReview = (title) => {
-      console.log(title);
+  const handleReview = (title) => {
+    console.log(title);
     props.history.push("/review/" + title);
   };
-      const handleSimilar = (title) => {
-      console.log(title);
+  const handleSimilar = (title) => {
+    console.log(title);
     props.history.push("/similar/" + title);
-  };
+  }
+  const handleFavorite = (title) => {
+    var payload = {
+      "login":cookies.get("login"),
+      "title": title
+    }
+    axios.post(apiBaseUrl+'favorite', payload);
+};
 
-  var movie_cards = [];
-  for (let movie in props.id) {
-    movie_cards.push(<Card className={classes.card} style={{'margin-top': 100}}>
-      <CardActionArea onClick={() => handleReview(props.title[movie])}>
-      <CardMedia
-      className={classes.media}
-      image={props.poster[movie]}
-      title={props.title[movie]}
-      />
-      <CardContent >
-      <Typography gutterBottom variant="h5" component="h2">
-      {props.title[movie]}
-      </Typography>
-      </CardContent>
-      </CardActionArea >
-      <CardActions>
-      <Button size="small" color="primary">
-      Read about it
-      </Button>
-      <Button size="small" color="primary" onClick={() => handleSimilar(props.title[movie])}>
-      Similar
-      </Button>
+var movie_cards = [];
+for (let movie in props.id) {
+  movie_cards.push(<Card className={classes.card} style={{'margin-top': 100}}>
+    <CardActionArea onClick={() => handleReview(props.title[movie])}>
+    <CardMedia
+    className={classes.media}
+    image={props.poster[movie]}
+    title={props.title[movie]}
+    />
+    <CardContent >
+    <Typography gutterBottom variant="h5" component="h2">
+    {props.title[movie]}
+    </Typography>
+    </CardContent>
+    </CardActionArea >
+    <CardActions>
+    <Button size="small" color="primary">
+    Read about it
+    </Button>
+    <Button size="small" color="primary" onClick={() => handleSimilar(props.title[movie])}>
+    Similar
+    </Button>
 
-      <p>
+    <p>
 
-      Rating: {props.rating[movie]}
-      </p>
-      <IconButton>
-      <FavoriteIcon />
-      </IconButton>
+    Rating: {props.rating[movie]}
+    </p>
+    <IconButton onClick={() => handleFavorite(props.title[movie])}>
+    <FavoriteIcon />
+    </IconButton>
 
-      </CardActions>
-      </Card>);
+    </CardActions>
+    </Card>);
   }
   return (
-    <Grid
-    container
-    direction="column"
-    justify="center"
-    alignItems="center"
-    >
-    {movie_cards}
+  <Grid
+  container
+  direction="column"
+  justify="center"
+  alignItems="center"
+  >
+  {movie_cards}
 
-    </Grid>
-    );
-  }
+  </Grid>
+  );
+}
 export default withRouter(MovieCards);
